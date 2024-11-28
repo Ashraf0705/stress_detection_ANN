@@ -1,0 +1,187 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Results - ANNalyzeStress</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #1a1a2e; /* Deep dark background */
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+
+        header {
+            background: linear-gradient(90deg, #0f0c29, #302b63, #24243e);
+            padding: 20px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        header h1 {
+            font-size: 36px;
+            font-weight: bold;
+            background: linear-gradient(90deg, #6a11cb, #2575fc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        nav ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+
+        nav ul li {
+            margin: 0 15px;
+        }
+
+        nav ul li a {
+            font-size: 18px;
+            color: #ffffff;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        nav ul li a:hover {
+            color: #6a11cb;
+        }
+
+        .container {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+            width: 500px;
+            animation: fadeIn 2s ease-in-out;
+            margin: 100px auto;
+        }
+
+        h1 {
+            font-size: 2.2em;
+            color: #6a11cb;
+            margin-bottom: 10px;
+        }
+
+        .result {
+            font-size: 2em;
+            font-weight: bold;
+            margin: 20px 0;
+            padding: 20px;
+            border-radius: 15px;
+            color: white;
+            background-color: #ff6363; /* Default color for detected */
+            animation: pulse 1s infinite;
+        }
+
+        .result.low {
+            background-color: #48C78E; /* Green color for low stress */
+        }
+
+        .message {
+            font-size: 1.1em;
+            color: #d1d1d1;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 15px 30px;
+            margin: 20px 0;
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            color: white;
+            border: none;
+            border-radius: 30px;
+            font-weight: bold;
+            font-size: 1.1em;
+            transition: transform 0.3s ease;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 10px 0;
+        }
+
+        li {
+            text-align: left;
+            margin: 5px 0;
+            font-size: 1em;
+            color: #d1d1d1;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        @keyframes fadeIn {
+            0% { opacity: 0; transform: scale(0.9); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Section -->
+    <header>
+        <h1>ANNalyzeStress</h1>
+        <nav>
+            <ul>
+                <li><a href="{% url 'index' %}">Home</a></li>
+                <li><a href="{% url 'about' %}">About</a></li>
+                <li><a href="{% url 'how_to_use' %}">How It Works</a></li>
+                <li><a href="{% url 'login' %}">Login</a></li>
+                <li><a href="{% url 'signup' %}">Sign Up</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Results Section -->
+    <div class="container">
+        <h1>Your Stress Level</h1>
+        <div class="result {% if stress_level == 'Not Detected' %}low{% endif %}">
+            {{ stress_level }}
+        </div>
+        
+        {% if stress_level == "Detected" %}
+            <p class="message">Your stress level is high. Consider relaxing and consulting a professional if necessary.</p>
+        {% else %}
+            <p class="message">Your stress level is low. Keep up the healthy habits!</p>
+        {% endif %}
+
+        {% if parameters %}
+            <h2>Your Latest Parameters</h2>
+            <ul>
+                <li><strong>Snoring Rate:</strong> {{ parameters.snoring_rate }}</li>
+                <li><strong>Respiratory Rate:</strong> {{ parameters.respiratory_rate }}</li>
+                <li><strong>Body Temperature:</strong> {{ parameters.body_temperature }}</li>
+                <li><strong>Limb Movement:</strong> {{ parameters.limb_movement }}</li>
+                <li><strong>Blood Oxygen:</strong> {{ parameters.blood_oxygen }}</li>
+                <li><strong>Eye Movement:</strong> {{ parameters.eye_movement }}</li>
+                <li><strong>Sleep Hours:</strong> {{ parameters.sleep_hours }}</li>
+                <li><strong>Heart Rate:</strong> {{ parameters.heart_rate }}</li>
+            </ul>
+        {% endif %}
+
+        <a href="{% url 'index' %}" class="btn">Back to Home</a>
+    </div>
+</body>
+</html>
