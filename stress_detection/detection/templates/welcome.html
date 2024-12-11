@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="ANNalyzeStress: A platform that uses Artificial Neural Networks to assess and manage stress levels, helping users maintain better mental health.">
-    <title>Home - ANNalyzeStress</title>
+    <title>Welcome - ANNalyzeStress</title>
     <style>
         /* General Styles */
         body {
@@ -126,63 +126,6 @@
             box-shadow: 0 12px 30px rgba(106, 17, 203, 0.7);
         }
 
-        /* About Section */
-        .about-project {
-            padding: 80px 20px;
-            text-align: center;
-            background: #24243e;
-            border-top: 5px solid #6a11cb;
-        }
-
-        .about-project h2 {
-            font-size: 40px;
-            color: #6a11cb;
-            margin-bottom: 30px;
-        }
-
-        .about-project p {
-            font-size: 20px;
-            line-height: 1.8;
-            max-width: 800px;
-            margin: 0 auto;
-            color: #d1d1d1;
-        }
-
-        /* Call to Action Section */
-        .cta {
-            text-align: center;
-            padding: 80px 20px;
-            background: linear-gradient(135deg, #6a11cb, #2575fc);
-            color: white;
-        }
-
-        .cta h2 {
-            font-size: 36px;
-            margin-bottom: 20px;
-        }
-
-        .cta p {
-            font-size: 22px;
-            margin-bottom: 30px;
-        }
-
-        .cta a {
-            text-decoration: none;
-            padding: 14px 40px;
-            font-size: 18px;
-            font-weight: bold;
-            color: #ffffff;
-            background: linear-gradient(90deg, #ff7eb3, #2575fc);
-            border-radius: 30px;
-            box-shadow: 0 8px 20px rgba(37, 117, 252, 0.5);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .cta a:hover {
-            transform: scale(1.1);
-            box-shadow: 0 12px 30px rgba(37, 117, 252, 0.7);
-        }
-
         /* Footer Section */
         footer {
             background: #121212;
@@ -203,11 +146,8 @@
         <h1>ANNalyzeStress</h1>
         <nav>
             <ul>
-                <li><a href="{% url 'index' %}">Home</a></li>
-                <li><a href="{% url 'about' %}">About</a></li>
                 <li><a href="{% url 'how_to_use' %}">How It Works</a></li>
-                <li><a href="{% url 'login' %}">Login</a></li>
-                <li><a href="{% url 'signup' %}">Sign Up</a></li>
+                <li><a href="{% url 'logout' %}">Logout</a></li> <!-- Logout link -->
             </ul>
         </nav>
     </header>
@@ -215,19 +155,10 @@
     <!-- Hero Section -->
     <section class="hero">
         <div class="hero-content">
-            <h1>Welcome to ANNalyzeStress</h1>
-            <p>Discover the precision of Artificial Neural Networks in assessing and managing stress levels. Begin your journey to a healthier mind today.</p>
-            <a href="{% url 'signup' %}">Get Started</a>
+            <h1>Welcome, {{ user.username }}!</h1>
+            <p>You're now part of ANNalyzeStress. The best platform to assess and manage your stress using Artificial Neural Networks. Let's start tracking your well-being.</p>
+            <a href="{% url 'parameter_entry' %}">Start Now</a>
         </div>
-    </section>
-
-    
-
-    <!-- Call to Action Section -->
-    <section class="cta">
-        <h2>Get Started with Stress Analysis</h2>
-        <p>Sign up now for personalized stress insights tailored to your needs.</p>
-        <a href="{% url 'signup' %}">Sign Up Now</a>
     </section>
 
     <!-- Footer Section -->

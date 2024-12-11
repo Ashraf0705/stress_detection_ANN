@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
@@ -29,7 +29,7 @@ def login_view(request):
         
         if user is not None:
             login(request, user)
-            return redirect('parameters')
+            return redirect('welcome')  # Redirect to the welcome page after successful login
         else:
             messages.error(request, 'Invalid username or password.')
     
@@ -56,6 +56,13 @@ def signup_view(request):
             return redirect('login')
     
     return render(request, 'signup.html')
+
+@login_required
+def welcome(request):
+    """Welcome page after login"""
+    return render(request, 'welcome.html', {
+        'username': request.user.username  # Pass the username to the template
+    })
 
 @login_required
 def parameter_entry(request):
@@ -117,7 +124,6 @@ def parameter_entry(request):
 
     return render(request, 'parameter_entry.html')
 
-
 @login_required
 def results(request, stress_level):
     """Results page view"""
@@ -127,13 +133,38 @@ def results(request, stress_level):
     # If no parameters are found, display a message
     if not latest_parameters:
         messages.error(request, 'No parameters found for your account.')
-        return redirect('parameters')  # Redirect back to parameter entry page if no data
+        return redirect('parameter_entry')  # Redirect back to parameter entry page if no data
 
     return render(request, 'results.html', {
         'stress_level': stress_level,  # Use the stress level passed from the URL
         'parameters': latest_parameters
     })
 
+@login_required
+def maintain_low_stress(request):
+    """Page to maintain low stress"""
+    latest_parameters = StressParameters.objects.filter(user=request.user).last()
+    
+    if latest_parameters and latest_parameters.stress_level == "Not Detected":
+        return render(request, 'maintain_low_stress.html', {
+            'user': request.user,
+        })
+    else:
+        return redirect('overcome_stress')  # If the stress level is detected, redirect to overcome_stress
+
+@login_required
+def overcome_stress(request):
+    """Page to overcome stress"""
+    latest_parameters = StressParameters.objects.filter(user=request.user).last()
+
+    return render(request, 'overcome_stress.html', {
+        'user': request.user,
+    })
+
+def logout_view(request):
+    """Logout view"""
+    logout(request)
+    return redirect('index')  # Redirect to the homepage after logout
 
 def about(request):
     """About page view"""

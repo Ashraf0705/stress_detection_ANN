@@ -6,8 +6,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Results - ANNalyzeStress</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
     <style>
+        /* General Styles */
         body {
             font-family: 'Poppins', sans-serif;
             margin: 0;
@@ -23,10 +23,10 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
             position: sticky;
             top: 0;
             z-index: 1000;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
         }
 
         header h1 {
@@ -37,75 +37,53 @@
             -webkit-text-fill-color: transparent;
         }
 
-        nav ul {
-            list-style: none;
-            margin: 0;
-            padding: 0;
-            display: flex;
-        }
-
-        nav ul li {
-            margin: 0 15px;
-        }
-
-        nav ul li a {
-            font-size: 18px;
-            color: #ffffff;
-            text-decoration: none;
-            transition: color 0.3s ease;
-        }
-
-        nav ul li a:hover {
-            color: #6a11cb;
-        }
-
         .container {
             text-align: center;
-            background: rgba(255, 255, 255, 0.1);
-            padding: 40px;
+            padding: 50px;
+            margin: 100px auto;
+            width: 80%;
+            max-width: 900px;
+            background-color: rgba(255, 255, 255, 0.1);
             border-radius: 20px;
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-            width: 500px;
             animation: fadeIn 2s ease-in-out;
-            margin: 100px auto;
         }
 
-        h1 {
-            font-size: 2.2em;
-            color: #6a11cb;
-            margin-bottom: 10px;
-        }
-
-        .result {
-            font-size: 2em;
+        .stress-level {
+            font-size: 3em;
             font-weight: bold;
+            color: white; /* Default color for text */
+            padding: 30px;
+            border-radius: 20px;
             margin: 20px 0;
-            padding: 20px;
-            border-radius: 15px;
-            color: white;
-            background-color: #ff6363; /* Default color for detected */
-            animation: pulse 1s infinite;
+            transition: transform 0.5s ease-in-out;
+            animation: pulse 1.5s infinite;
         }
 
-        .result.low {
-            background-color: #48C78E; /* Green color for low stress */
+        .stress-level.low {
+            background-color: #48C78E; /* Green for low stress */
+        }
+
+        .stress-level.detected {
+            background-color: #ff6363; /* Red for high stress */
         }
 
         .message {
-            font-size: 1.1em;
+            font-size: 1.2em;
             color: #d1d1d1;
+            margin-top: 20px;
         }
 
         .btn {
             display: inline-block;
             padding: 15px 30px;
             margin: 20px 0;
-            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            background: linear-gradient(135deg, #6a11cb, #2575fc);
             color: white;
             border: none;
             border-radius: 30px;
             font-weight: bold;
-            font-size: 1.1em;
+            font-size: 1.2em;
             transition: transform 0.3s ease;
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
         }
@@ -115,22 +93,44 @@
             box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
         }
 
+        .parameters-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .parameter-card {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+            width: 250px;
+            text-align: left;
+        }
+
+        .parameter-card h3 {
+            font-size: 1.5em;
+            color: #48C78E;
+            margin-bottom: 10px;
+        }
+
         ul {
             list-style-type: none;
             padding: 0;
-            margin: 10px 0;
+            margin: 0;
         }
 
         li {
             text-align: left;
             margin: 5px 0;
-            font-size: 1em;
             color: #d1d1d1;
+            font-size: 1.1em;
         }
 
         @keyframes pulse {
             0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.1); }
+            50% { transform: scale(1.2); }
         }
 
         @keyframes fadeIn {
@@ -143,45 +143,71 @@
     <!-- Header Section -->
     <header>
         <h1>ANNalyzeStress</h1>
-        <nav>
-            <ul>
-                <li><a href="{% url 'index' %}">Home</a></li>
-                <li><a href="{% url 'about' %}">About</a></li>
-                <li><a href="{% url 'how_to_use' %}">How It Works</a></li>
-                <li><a href="{% url 'login' %}">Login</a></li>
-                <li><a href="{% url 'signup' %}">Sign Up</a></li>
-            </ul>
-        </nav>
     </header>
 
     <!-- Results Section -->
     <div class="container">
-        <h1>Your Stress Level</h1>
-        <div class="result {% if stress_level == 'Not Detected' %}low{% endif %}">
+        <h2>Your Stress Level</h2>
+
+        <!-- Stress Level Visualization (In Box) -->
+        <div class="stress-level {% if stress_level == 'Detected' %}detected{% elif stress_level == 'Not Detected' %}low{% endif %}">
             {{ stress_level }}
         </div>
-        
-        {% if stress_level == "Detected" %}
-            <p class="message">Your stress level is high. Consider relaxing and consulting a professional if necessary.</p>
-        {% else %}
-            <p class="message">Your stress level is low. Keep up the healthy habits!</p>
-        {% endif %}
+
+        <div class="message">
+            {% if stress_level == "Detected" %}
+                <p>Your stress level is high. Consider relaxing and consulting a professional if necessary.</p>
+                <a href="{% url 'overcome_stress' %}" class="btn">How to Overcome Stress</a>
+            {% else %}
+                <p>Your stress level is low. Keep up the healthy habits!</p>
+                <a href="{% url 'maintain_low_stress' %}" class="btn">How to Maintain Low Stress</a>
+            {% endif %}
+        </div>
 
         {% if parameters %}
             <h2>Your Latest Parameters</h2>
-            <ul>
-                <li><strong>Snoring Rate:</strong> {{ parameters.snoring_rate }}</li>
-                <li><strong>Respiratory Rate:</strong> {{ parameters.respiratory_rate }}</li>
-                <li><strong>Body Temperature:</strong> {{ parameters.body_temperature }}</li>
-                <li><strong>Limb Movement:</strong> {{ parameters.limb_movement }}</li>
-                <li><strong>Blood Oxygen:</strong> {{ parameters.blood_oxygen }}</li>
-                <li><strong>Eye Movement:</strong> {{ parameters.eye_movement }}</li>
-                <li><strong>Sleep Hours:</strong> {{ parameters.sleep_hours }}</li>
-                <li><strong>Heart Rate:</strong> {{ parameters.heart_rate }}</li>
-            </ul>
+            <div class="parameters-container">
+                <div class="parameter-card">
+                    <h3>Snoring Rate</h3>
+                    <p>{{ parameters.snoring_rate }}</p>
+                </div>
+                <div class="parameter-card">
+                    <h3>Respiratory Rate</h3>
+                    <p>{{ parameters.respiratory_rate }}</p>
+                </div>
+                <div class="parameter-card">
+                    <h3>Body Temperature</h3>
+                    <p>{{ parameters.body_temperature }}</p>
+                </div>
+                <div class="parameter-card">
+                    <h3>Limb Movement</h3>
+                    <p>{{ parameters.limb_movement }}</p>
+                </div>
+                <div class="parameter-card">
+                    <h3>Blood Oxygen</h3>
+                    <p>{{ parameters.blood_oxygen }}</p>
+                </div>
+                <div class="parameter-card">
+                    <h3>Eye Movement</h3>
+                    <p>{{ parameters.eye_movement }}</p>
+                </div>
+                <div class="parameter-card">
+                    <h3>Sleep Hours</h3>
+                    <p>{{ parameters.sleep_hours }}</p>
+                </div>
+                <div class="parameter-card">
+                    <h3>Heart Rate</h3>
+                    <p>{{ parameters.heart_rate }}</p>
+                </div>
+            </div>
         {% endif %}
 
-        <a href="{% url 'index' %}" class="btn">Back to Home</a>
+        <!-- Back to Home Button -->
+        {% if user.is_authenticated %}
+            <a href="{% url 'welcome' %}" class="btn">Back to Home</a>
+        {% else %}
+            <a href="{% url 'index' %}" class="btn">Back to Home</a>
+        {% endif %}
     </div>
 </body>
 </html>
