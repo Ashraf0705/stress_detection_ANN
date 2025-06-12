@@ -1,9 +1,10 @@
 services:
   - type: web
     name: stress_detection_ANN
-    env: python
+    runtime: python
     buildCommand: pip install -r requirements.txt
-    startCommand: gunicorn backend.wsgi:application
-    envVars:
-      - fromFile: .env
+    startCommand: gunicorn stress_detection.wsgi:application
     pythonVersion: 3.11.9
+    envVars:
+      - key: DJANGO_SETTINGS_MODULE
+        value: stress_detection.settings
