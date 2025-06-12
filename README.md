@@ -1,56 +1,44 @@
-# Human Stress Detection and Prediction
+# ANNalyzeStress: AI-Powered Stress Detection 🧠✨
 
-[![Django](https://img.shields.io/badge/Django-5.x-brightgreen.svg)](https://www.djangoproject.com/)
-[![Python](https://img.shields.io/badge/Python-%203.12-blue.svg)](https://www.python.org/)
-
-A Django-based web application that detects and predicts human stress levels during sleep using physiological data. This project employs an Artificial Neural Network (ANN) model to classify sleep data into two categories: *Stressed* or *Not Stressed*.
-
-## 🚀 Features
-
-- *Stress Detection*: Predicts stress levels based on input physiological data.
-- *Interactive Web Interface*: User-friendly interface for uploading data and viewing results.
-- *Real-Time Predictions*: Provides instant predictions based on trained ANN models.
-- *Django Framework*: Built using the robust Django web framework.
-- *Scalable*: Ready for deployment in real-world scenarios.
+Welcome to ANNalyzeStress! This is a full-stack web application that leverages an Artificial Neural Network (ANN) to predict human stress levels based on key physiological and health parameters. It provides users with a secure, personalized dashboard to track their inputs and receive instant, AI-driven feedback on their stress condition.
 
 
-## 🛠 Installation and Setup
+## Live Application
 
-Follow these steps to set up the project locally:
+*   **URL:** [https://stress-detection-ann.onrender.com](https://stress-detection-ann.onrender.com/)
 
-1. *Clone the Repository*:
-   bash
-   git clone https://github.com/Ashraf0705/Stress_detection_ANN.git
-   cd Human-Stress-Detection-Prediction
+*(Note: The free-tier instance may take up to 50 seconds to spin up on the first visit.)*
 
-2. **Set Up a Virtual Environment**:
-    bash
-    python -m venv venv
-    source venv/bin/activate
-    
+![ANNalyzeStress Homepage Screenshot](https://raw.githubusercontent.com/Ashraf0705/stress_detection_ANN/main/stress_detection/detection/static/detection/images/image.png)
 
-3. **Install Dependencies**:
-    bash
-    pip install -r requirements.txt
-     
+## About The Project
 
-4. **Apply Migrations**:
-    bash
-    python manage.py makemigrations
-    python manage.py migrate
-    
+The core mission of ANNalyzeStress is to provide an accessible tool for individuals to gain insight into their physiological stress levels. By entering eight simple health metrics, the application's finely-tuned neural network analyzes the data and provides one of two clear outcomes: "Stress Detected" or "Stress Not Detected".
 
-5. **Run the Server**:
-    bash
-    python manage.py runserver
-    ```
+Based on the result, the user is guided to dedicated pages offering actionable advice—either on how to maintain a low-stress state or on techniques and resources to overcome detected stress. The project showcases a seamless integration of a machine learning backend with a robust and user-friendly web interface.
 
-Access the application at http://127.0.0.1:8000/.
+## Features
 
-## 🔧 How It Works
+**User-Facing Features:**
+*   **Secure Authentication:** Robust user registration with password validation, login, and logout functionality.
+*   **Personalized Dashboard ("Welcome" Page):** A central hub for logged-in users.
+*   **Intuitive Parameter Entry:** An easy-to-use form with sliders to input key health metrics (e.g., heart rate, body temperature, sleep hours).
+*   **Instant AI Prediction:** On form submission, the backend ANN model processes the data and instantly calculates a stress prediction.
+*   **Clear Result Display:** A dedicated results page that shows the user's input parameters and the final stress prediction ("Detected" or "Not Detected").
+*   **Tailored Guidance:** Users are dynamically redirected to either a "Maintain Low Stress" or "Overcome Stress" page with relevant information based on their results.
+*   **Informational Pages:** Includes "About" and "How It Works" pages to provide context and instructions.
 
-1. Data Input: The user uploads physiological data (e.g., heart rate, respiration rate).
+**Technical & Architectural Features:**
+*   **High-Accuracy ANN Model:** The core prediction engine is a Keras-based Artificial Neural Network achieving 99% accuracy on the test dataset.
+*   **Decoupled Frontend/Backend Logic:** Classic Django architecture separating business logic from presentation.
+*   **Production-Ready Deployment:** Fully deployed on Render, utilizing a Gunicorn server for performance, WhiteNoise for efficient static file serving, and a managed PostgreSQL database for data persistence.
+*   **Optimized for Performance:** The ML model is loaded into memory only once at application startup to ensure low latency for user requests and to operate within free-tier resource limits.
+*   **Dual-Database Configuration:** The application is configured to use PostgreSQL in production (on Render) and MySQL for local development, demonstrating best practices for environment-specific settings.
 
-2. Model Prediction: The ANN model processes the data and predicts stress levels.
+## Technology Stack
 
-3. Results Display: The prediction result is displayed on the web interface.
+*   **Backend:** Python, Django
+*   **Frontend:** HTML5, CSS3 (with inline styles), JavaScript
+*   **Database:** PostgreSQL (Production on Render), MySQL (Local Development)
+*   **Machine Learning:** Keras (with NumPy/JAX backend), Scikit-learn, Pandas, NumPy
+*   **Deployment & DevOps:** Render, Gunicorn, WhiteNoise, Git
