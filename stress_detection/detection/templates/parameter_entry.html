@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enter Parameters</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(135deg, #1a1a2e 0%, #6a11cb 100%);
+        }
+
+        .container {
+            text-align: center;
+            background: rgba(26, 26, 46, 0.9);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+            width: 600px;
+            animation: fadeIn 2s ease-in-out;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            color: #ffffff;
+            margin-bottom: 30px;
+            font-weight: bold;
+            background: linear-gradient(90deg, #ff7eb3, #2575fc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .parameter-group {
+            margin: 20px 0;
+            position: relative;
+        }
+
+        label {
+            font-size: 1.2em;
+            color: #fff;
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .slider-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .slider {
+            width: 80%;
+            appearance: none;
+            height: 12px;
+            border-radius: 8px;
+            background: linear-gradient(90deg, #6a11cb 0%, #2575fc 100%);
+            outline: none;
+            transition: background 0.3s ease;
+        }
+
+        .slider:hover {
+            background: linear-gradient(90deg, #ff7eb3 0%, #2575fc 100%);
+        }
+
+        .slider::-webkit-slider-thumb {
+            appearance: none;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            background: #ffffff;
+            cursor: pointer;
+            transition: transform 0.3s ease, background 0.3s ease;
+        }
+
+        .slider::-webkit-slider-thumb:hover {
+            background: #ff7eb3;
+            transform: scale(1.2);
+        }
+
+        .value {
+            margin-left: 15px;
+            font-weight: bold;
+            color: #ffffff;
+            font-size: 1.1em;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 15px 30px;
+            margin: 20px 0;
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            color: white;
+            border: none;
+            border-radius: 30px;
+            font-weight: bold;
+            font-size: 1.2em;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        @keyframes fadeIn {
+            0% { opacity: 0; transform: scale(0.9); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Enter Your Health Parameters</h1>
+        <form action="{% url 'parameter_entry' %}" method="post">
+            {% csrf_token %}
+            
+            <div class="parameter-group">
+                <label for="snoring">Snoring Rate</label>
+                <div class="slider-container">
+                    <input type="range" min="46" max="98" value="50" class="slider" id="snoring" name="snoring_rate" oninput="updateValue('snoring')">
+                    <span class="value" id="snoring-value">50</span>
+                </div>
+            </div>
+
+            <div class="parameter-group">
+                <label for="respiratory">Respiratory Rate</label>
+                <div class="slider-container">
+                    <input type="range" min="15" max="30" value="22" class="slider" id="respiratory" name="respiratory_rate" oninput="updateValue('respiratory')">
+                    <span class="value" id="respiratory-value">22</span>
+                </div>
+            </div>
+
+            <div class="parameter-group">
+                <label for="temperature">Body Temperature</label>
+                <div class="slider-container">
+                    <input type="range" min="86" max="98" value="92" class="slider" id="temperature" name="body_temp" oninput="updateValue('temperature')">
+                    <span class="value" id="temperature-value">92</span>
+                </div>
+            </div>
+
+            <div class="parameter-group">
+                <label for="limb">Limb Movement</label>
+                <div class="slider-container">
+                    <input type="range" min="5" max="18" value="10" class="slider" id="limb" name="limb_movement" oninput="updateValue('limb')">
+                    <span class="value" id="limb-value">10</span>
+                </div>
+            </div>
+
+            <div class="parameter-group">
+                <label for="oxygen">Blood Oxygen</label>
+                <div class="slider-container">
+                    <input type="range" min="84" max="96" value="90" class="slider" id="oxygen" name="blood_oxygen" oninput="updateValue('oxygen')">
+                    <span class="value" id="oxygen-value">90</span>
+                </div>
+            </div>
+
+            <div class="parameter-group">
+                <label for="eye">Eye Movement</label>
+                <div class="slider-container">
+                    <input type="range" min="60" max="105" value="80" class="slider" id="eye" name="eye_movement" oninput="updateValue('eye')">
+                    <span class="value" id="eye-value">80</span>
+                </div>
+            </div>
+
+            <div class="parameter-group">
+                <label for="sleep">Sleep Hours</label>
+                <div class="slider-container">
+                    <input type="range" min="0" max="9" value="5" class="slider" id="sleep" name="sleep_hours" oninput="updateValue('sleep')">
+                    <span class="value" id="sleep-value">5</span>
+                </div>
+            </div>
+
+            <div class="parameter-group">
+                <label for="heart">Heart Rate</label>
+                <div class="slider-container">
+                    <input type="range" min="52" max="84" value="68" class="slider" id="heart" name="heart_rate" oninput="updateValue('heart')">
+                    <span class="value" id="heart-value">68</span>
+                </div>
+            </div>
+
+            <button type="submit" class="btn">Submit</button>
+        </form>
+    </div>
+
+    <script>
+        function updateValue(id) {
+            document.getElementById(id + '-value').innerText = document.getElementById(id).value;
+        }
+    </script>
+</body>
+</html>

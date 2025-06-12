@@ -1,0 +1,243 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - ANNalyzeStress</title>
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #1a1a2e; /* Deep dark background */
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+
+        header {
+            background: linear-gradient(90deg, #0f0c29, #302b63, #24243e);
+            padding: 20px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        header h1 {
+            font-size: 36px;
+            font-weight: bold;
+            background: linear-gradient(90deg, #6a11cb, #2575fc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        nav ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+
+        nav ul li {
+            margin: 0 15px;
+        }
+
+        nav ul li a {
+            font-size: 18px;
+            color: #ffffff;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        nav ul li a:hover {
+            color: #6a11cb;
+        }
+
+        /* Sign Up Section */
+        .signup-section {
+            padding: 80px 20px;
+            text-align: center;
+            background-color: #24243e;
+        }
+
+        .signup-section h2 {
+            font-size: 36px;
+            color: #6a11cb;
+            margin-bottom: 40px;
+        }
+
+        .signup-form {
+            width: 40%;
+            margin: 0 auto;
+            background-color: #1a1a2e;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .signup-form label {
+            font-size: 18px;
+            color: #ffffff;
+            display: block;
+            margin-bottom: 10px;
+            text-align: left;
+        }
+
+        .signup-form input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 16px;
+        }
+
+        .signup-form input[type="submit"] {
+            background-color: #6a11cb;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .signup-form input[type="submit"]:hover {
+            background-color: #ff7eb3;
+        }
+
+        .login-link {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .login-link a {
+            color: #6a11cb;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .login-link a:hover {
+            color: #ff7eb3;
+        }
+
+        /* Footer Section */
+        footer {
+            background-color: #121212;
+            color: #bbb;
+            padding: 10px 20px;
+            text-align: center;
+        }
+
+        footer p {
+            margin: 0;
+        }
+
+        /* Error Message */
+        .error-message {
+            color: red;
+            margin-top: 10px;
+        }
+
+    </style>
+</head>
+<body>
+    <!-- Header Section -->
+    <header>
+        <h1>ANNalyzeStress</h1>
+        <nav>
+            <ul>
+                <li><a href="{% url 'index' %}">Home</a></li>
+                <li><a href="{% url 'about' %}">About</a></li>
+                <li><a href="{% url 'how_to_use' %}">How It Works</a></li>
+                <li><a href="{% url 'login' %}">Login</a></li>
+                <li><a href="{% url 'signup' %}">Sign Up</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Sign Up Section -->
+    <section class="signup-section">
+        <h2>Create Your Account</h2>
+        <p>Join ANNalyzeStress and gain access to personalized insights to manage your stress effectively.</p>
+
+        <!-- Sign Up Form -->
+        <form class="signup-form" action="{% url 'signup' %}" method="POST" id="signup-form">
+            {% csrf_token %}
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username" required>
+
+            <label for="full_name">Full Name</label>
+            <input type="text" id="full_name" name="full_name" required>
+
+            <label for="email">Email Address</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" required>
+
+            <label for="confirm_password">Confirm Password</label>
+            <input type="password" id="confirm_password" name="confirm_password" required>
+
+            <input type="submit" value="Sign Up">
+
+            <!-- Error message for short password -->
+            <div class="error-message" id="password-error" style="display: none;">
+                Password must be at least 8 characters long.
+            </div>
+
+            <!-- Dynamic error messages from Django -->
+            {% if form.errors %}
+                <div class="error-message">
+                    <ul>
+                        {% for field in form %}
+                            {% for error in field.errors %}
+                                <li>{{ error }}</li>
+                            {% endfor %}
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
+        </form>
+
+        <!-- Login Link -->
+        <div class="login-link">
+            <p>Already have an account? <a href="{% url 'login' %}">Login Here</a></p>
+        </div>
+    </section>
+
+    <!-- Footer Section -->
+    <footer>
+        <p>&copy; 2024 ANNalyzeStress. All rights reserved. Designed with care by Ashraf.</p>
+    </footer>
+
+    <!-- JavaScript for password validation -->
+    <script>
+        document.getElementById("signup-form").addEventListener("submit", function(event) {
+            var password = document.getElementById("password").value;
+            var confirmPassword = document.getElementById("confirm_password").value;
+            var errorMessage = document.getElementById("password-error");
+
+            // Check if password length is less than 8 characters
+            if (password.length < 8) {
+                // Show error message
+                errorMessage.style.display = "block";
+                // Prevent form submission
+                event.preventDefault();
+            } else if (password !== confirmPassword) {
+                // Check if passwords match
+                errorMessage.style.display = "block";
+                errorMessage.innerHTML = "Passwords do not match.";
+                event.preventDefault();
+            } else {
+                // Hide error message if password is valid
+                errorMessage.style.display = "none";
+            }
+        });
+    </script>
+</body>
+</html>

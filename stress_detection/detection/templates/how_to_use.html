@@ -1,0 +1,257 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="ANNalyzeStress: A platform that uses Artificial Neural Networks to assess and manage stress levels, helping users maintain better mental health.">
+    <title>How to Use - ANNalyzeStress</title>
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #1a1a2e; /* Deep dark background */
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+
+        header {
+            background: linear-gradient(90deg, #0f0c29, #302b63, #24243e);
+            padding: 20px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        header h1 {
+            font-size: 36px;
+            font-weight: bold;
+            background: linear-gradient(90deg, #6a11cb, #2575fc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        nav ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+
+        nav ul li {
+            margin: 0 15px;
+        }
+
+        nav ul li a {
+            font-size: 18px;
+            color: #ffffff;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        nav ul li a:hover {
+            color: #6a11cb;
+        }
+
+        /* How to Use Section */
+        .how-to-use {
+            padding: 80px 20px;
+            text-align: center;
+            background-color: #24243e;
+            border-top: 5px solid #6a11cb;
+        }
+
+        .how-to-use h2 {
+            font-size: 40px;
+            color: #6a11cb;
+            margin-bottom: 30px;
+        }
+
+        .how-to-use p {
+            font-size: 20px;
+            line-height: 1.8;
+            max-width: 800px;
+            margin: 0 auto;
+            color: #d1d1d1;
+        }
+
+        .steps {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 40px;
+            margin-top: 30px;
+        }
+
+        .step {
+            width: 30%;
+            background-color: #121212;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .step h3 {
+            font-size: 24px;
+            color: #6a11cb;
+            margin-bottom: 15px;
+        }
+
+        .step p {
+            font-size: 18px;
+            line-height: 1.8;
+            color: #bbb;
+            margin-bottom: 20px;
+        }
+
+        .step img {
+            width: 100%;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+
+        /* Mobile responsiveness */
+        @media (max-width: 768px) {
+            .steps {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .step {
+                width: 80%;
+                margin-bottom: 30px;
+            }
+        }
+
+        /* Call to Action Section */
+        .cta {
+            text-align: center;
+            padding: 80px 20px;
+            background: linear-gradient(135deg, #6a11cb, #2575fc);
+            color: white;
+        }
+
+        .cta h2 {
+            font-size: 36px;
+            margin-bottom: 20px;
+        }
+
+        .cta p {
+            font-size: 22px;
+            margin-bottom: 30px;
+        }
+
+        .cta a {
+            text-decoration: none;
+            padding: 14px 40px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #ffffff;
+            background: linear-gradient(90deg, #ff7eb3, #2575fc);
+            border-radius: 30px;
+            box-shadow: 0 8px 20px rgba(37, 117, 252, 0.5);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .cta a:hover {
+            transform: scale(1.1);
+            box-shadow: 0 12px 30px rgba(37, 117, 252, 0.7);
+        }
+
+        /* Footer Section */
+        footer {
+            background: #121212;
+            color: #bbb;
+            padding: 20px 0;
+            text-align: center;
+        }
+
+        footer p {
+            font-size: 14px;
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Section -->
+    <header>
+        <h1>ANNalyzeStress</h1>
+        <nav>
+            <ul>
+                <li><a href="{% url 'index' %}">Home</a></li>
+                <li><a href="{% url 'about' %}">About</a></li>
+                <li><a href="{% url 'how_to_use' %}">How It Works</a></li>
+                <li><a href="{% url 'login' %}">Login</a></li>
+                <li><a href="{% url 'signup' %}">Sign Up</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- How to Use Section -->
+    <section class="how-to-use">
+        <h2>How to Use ANNalyzeStress</h2>
+        <p>Follow these steps to start your journey towards stress management with ANNalyzeStress.</p>
+        
+        <div class="steps">
+            <!-- Step 1 -->
+            <div class="step">
+                <img src="{% static 'images/signup.png' %}" alt="Sign Up">
+                <h3>Step 1: Sign Up</h3>
+                <p>Create an account to begin tracking your stress levels. Enter your details and register securely.</p>
+            </div>
+
+            <!-- Step 2 -->
+            <div class="step">
+                <img src="{% static 'images/login.png' %}" alt="Login">
+                <h3>Step 2: Login</h3>
+                <p>If you already have an account, log in with your credentials to access your dashboard.</p>
+            </div>
+
+            <!-- Step 3 -->
+            <div class="step">
+                <img src="{% static 'images/parameter_entry.png' %}" alt="Enter Parameters">
+                <h3>Step 3: Input Your Parameters</h3>
+                <p>Enter your health data, such as heart rate, respiratory rate, and more, to track your stress levels.</p>
+            </div>
+        </div>
+
+        <div class="steps">
+            <!-- Step 4 -->
+            <div class="step">
+                <img src="{% static 'images/result.png' %}" alt="Check Your Result">
+                <h3>Step 4: Check Your Results</h3>
+                <p>View personalized insights on your stress levels and receive actionable feedback to manage stress.</p>
+            </div>
+        </div>
+        <div class="steps">
+            <!-- Step 4 -->
+            <div class="step">
+                <img src="{% static 'images/info.png' %}" alt="Check Your Result">
+                <h3>Step 5: follow based on Your Results</h3>
+                <p>View personalized insights on your stress levels and receive actionable feedback to manage stress.</p>
+            </div>
+        </div>
+
+    </section>
+
+    <!-- Call to Action Section -->
+    <section class="cta">
+        <h2>Start Your Stress-Free Journey Today!</h2>
+        <p>Ready to take control of your stress levels? Sign up now and begin your personalized journey to a more balanced life.</p>
+        <a href="{% url 'signup' %}">Sign Up Now</a>
+    </section>
+
+    <!-- Footer Section -->
+    <footer>
+        <p>&copy; 2024 ANNalyzeStress. Designed with care by Ashraf.</p>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,198 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Overcome Stress - ANNalyzeStress</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #1a1a2e; /* Deep dark background */
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+
+        header {
+            background: linear-gradient(90deg, #0f0c29, #302b63, #24243e);
+            padding: 20px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        header h1 {
+            font-size: 36px;
+            font-weight: bold;
+            background: linear-gradient(90deg, #6a11cb, #2575fc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        nav ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+
+        nav ul li {
+            margin: 0 15px;
+        }
+
+        nav ul li a {
+            font-size: 18px;
+            color: #ffffff;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        nav ul li a:hover {
+            color: #6a11cb;
+        }
+
+        .container {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+            width: 600px;
+            animation: fadeIn 2s ease-in-out;
+            margin: 100px auto;
+        }
+
+        h1 {
+            font-size: 2.2em;
+            color: #6a11cb;
+            margin-bottom: 10px;
+        }
+
+        .message {
+            font-size: 1.2em;
+            color: #d1d1d1;
+            margin-top: 20px;
+        }
+
+        .advice {
+            font-size: 1.1em;
+            color: #d1d1d1;
+            margin-top: 20px;
+            line-height: 1.6;
+        }
+
+        .resources {
+            margin-top: 30px;
+            font-size: 1.1em;
+            color: #d1d1d1;
+        }
+
+        .resources a {
+            color: #6a11cb;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .resources a:hover {
+            color: #2575fc;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 15px 30px;
+            margin: 20px 0;
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            color: white;
+            border: none;
+            border-radius: 30px;
+            font-weight: bold;
+            font-size: 1.1em;
+            transition: transform 0.3s ease;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        @keyframes fadeIn {
+            0% { opacity: 0; transform: scale(0.9); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Section -->
+    <header>
+        <h1>ANNalyzeStress</h1>
+        <nav>
+            <ul>
+                <li><a href="{% url 'logout' %}">Logout</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Overcome Stress Section -->
+    <div class="container">
+        <h1>Overcome Stress</h1>
+
+        {% if stress_level == "Detected" %}
+            <p class="message">Don't worry, {{ user.username }}! You are experiencing high stress. It's okay to feel this way, but it's important to take steps to manage it.</p>
+            
+            <div class="advice">
+                <h3>Here are some techniques you can try to reduce your stress:</h3>
+                <ul>
+                    <li><strong>Deep Breathing:</strong> Inhale slowly, hold for a few seconds, and then exhale. This helps calm your nervous system.</li>
+                    <li><strong>Exercise:</strong> Go for a walk or do some light stretching. Exercise releases endorphins that improve mood.</li>
+                    <li><strong>Mindfulness Meditation:</strong> Try meditating for a few minutes to bring your focus to the present moment.</li>
+                    <li><strong>Sleep:</strong> Ensure you get enough sleep. Lack of rest can contribute to stress.</li>
+                </ul>
+            </div>
+
+            <div class="resources">
+                <h3>Helpful Resources:</h3>
+                <ul>
+                    <li><a href="https://www.headspace.com/" target="_blank">Headspace - Guided Meditation</a></li>
+                    <li><a href="https://www.calm.com/" target="_blank">Calm - Meditation and Relaxation</a></li>
+                    <li><a href="https://www.psychologytoday.com/us/basics/stress" target="_blank">Psychology Today - Stress Management</a></li>
+                    <li><a href="https://www.meditation.com/" target="_blank">Meditation.com - Learn Meditation</a></li>
+                </ul>
+            </div>
+
+            <a href="{% url 'index' %}" class="btn">Back to Home</a>
+        {% else %}
+            <p class="message">not so good news, {{ user.username }}! Your stress level is high. Keep maintaining a balanced lifestyle to keep it that way!</p>
+            
+            <div class="advice">
+                <h3>Tips to Maintain a Low Stress Level:</h3>
+                <ul>
+                    <li><strong>Stay Active:</strong> Regular physical activity helps maintain mental health.</li>
+                    <li><strong>Balanced Diet:</strong> Eating healthy can reduce stress and keep your body energized.</li>
+                    <li><strong>Connect with Loved Ones:</strong> Socializing helps to improve your emotional well-being.</li>
+                    <li><strong>Practice Gratitude:</strong> Write down things you are grateful for to maintain a positive outlook.</li>
+                </ul>
+            </div>
+
+            <div class="resources">
+                <h3>Helpful Resources:</h3>
+                <ul>
+                    <li><a href="https://www.healthline.com/nutrition/top-10-evidence-based-health-benefits-of-meditation" target="_blank">Healthline - Benefits of Meditation</a></li>
+                    <li><a href="https://www.wellness.com/" target="_blank">Wellness - Self-Care Tips</a></li>
+                    <li><a href="https://www.happify.com/" target="_blank">Happify - Activities to Improve Your Mood</a></li>
+                </ul>
+            </div>
+
+            <a href="{% url 'welcome' %}" class="btn">Back to Home</a>
+        {% endif %}
+    </div>
+</body>
+</html>

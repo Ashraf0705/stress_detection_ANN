@@ -1,0 +1,207 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Learn more about ANNalyzeStress, a platform leveraging AI to monitor and manage stress using real-time health data.">
+    <title>About Us - ANNalyzeStress</title>
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #1a1a2e; /* Deep dark background */
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+
+        header {
+            background: linear-gradient(90deg, #0f0c29, #302b63, #24243e);
+            padding: 20px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        header h1 {
+            font-size: 36px;
+            font-weight: bold;
+            background: linear-gradient(90deg, #6a11cb, #2575fc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        nav ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+
+        nav ul li {
+            margin: 0 15px;
+        }
+
+        nav ul li a {
+            font-size: 18px;
+            color: #ffffff;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        nav ul li a:hover {
+            color: #6a11cb;
+        }
+
+        /* About Section */
+        .about-section {
+            text-align: center;
+            padding: 80px 20px;
+            background: #24243e;
+            border-top: 5px solid #6a11cb;
+        }
+
+        .about-section h2 {
+            font-size: 40px;
+            color: #6a11cb;
+            margin-bottom: 30px;
+        }
+
+        .about-section p {
+            font-size: 20px;
+            line-height: 1.8;
+            max-width: 800px;
+            margin: 0 auto;
+            color: #d1d1d1;
+        }
+
+        /* Meet the Creator Section */
+        .meet-creator {
+            background: #1a1a2e;
+            padding: 80px 20px;
+            text-align: center;
+            border-top: 5px solid #6a11cb;
+        }
+
+        .meet-creator h2 {
+            font-size: 36px;
+            color: #ff7eb3;
+            margin-bottom: 20px;
+        }
+
+        .meet-creator p {
+            font-size: 18px;
+            line-height: 1.8;
+            max-width: 700px;
+            margin: 0 auto;
+            color: #e0e0e0;
+        }
+
+        /* Call to Action Section */
+        .cta {
+            text-align: center;
+            padding: 80px 20px;
+            background: linear-gradient(135deg, #6a11cb, #2575fc);
+            color: white;
+        }
+
+        .cta h2 {
+            font-size: 36px;
+            margin-bottom: 20px;
+        }
+
+        .cta p {
+            font-size: 22px;
+            margin-bottom: 30px;
+        }
+
+        .cta a {
+            text-decoration: none;
+            padding: 14px 40px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #ffffff;
+            background: linear-gradient(90deg, #ff7eb3, #2575fc);
+            border-radius: 30px;
+            box-shadow: 0 8px 20px rgba(37, 117, 252, 0.5);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .cta a:hover {
+            transform: scale(1.1);
+            box-shadow: 0 12px 30px rgba(37, 117, 252, 0.7);
+        }
+
+        /* Footer Section */
+        footer {
+            background: #121212;
+            color: #bbb;
+            padding: 20px 0;
+            text-align: center;
+        }
+
+        footer p {
+            font-size: 14px;
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Section -->
+    <header>
+        <h1>ANNalyzeStress</h1>
+        <nav>
+            <ul>
+                <li><a href="{% url 'index' %}">Home</a></li>
+                <li><a href="{% url 'about' %}">About</a></li>
+                <li><a href="{% url 'how_to_use' %}">How It Works</a></li>
+                <li><a href="{% url 'login' %}">Login</a></li>
+                <li><a href="{% url 'signup' %}">Sign Up</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- About Section -->
+    <section class="about-section">
+        <h2>About ANNalyzeStress</h2>
+        <p>ANNalyzeStress harnesses the power of Artificial Neural Networks to provide personalized stress analysis based on real-time health data. Our mission is to promote better mental health through intelligent insights.</p>
+    </section>
+
+    <!-- Meet the Creator Section -->
+    <section class="meet-creator">
+        <h2>Meet the Creator ASHRAF</h2>
+        <p>Hi! I'm <strong>Ashraf</strong>, the creator of ANNalyzeStress. My passion lies in using technology to improve lives. This project reflects my commitment to making stress management effective, accessible, and easy for everyone. Thank you for being a part of this journey!</p>
+    </section>
+
+
+    <section class="meet-creator">
+        <h2>Meet My TEAM</h2>
+        <p>
+            A special thanks to my incredible team for their dedication and support in bringing this vision to life: 
+            <strong>Kaustubh</strong>, <strong>Lilly</strong>, <strong>Mukesh</strong>, <strong>Swagat</strong>, and <strong>Shakti</strong>. 
+            Together, we’ve made this platform a reality, and it’s a privilege to work alongside such talented individuals. 
+            Thank you for being a part of this journey!
+        </p>
+    </section>
+    
+
+    <!-- Call to Action Section -->
+    <section class="cta">
+        <h2>Join Us on the Journey to Better Mental Health</h2>
+        <p>Track your stress levels with precision and take steps towards a healthier life. Start now!</p>
+        <a href="{% url 'signup' %}">Get Started</a>
+    </section>
+
+    <!-- Footer Section -->
+    <footer>
+        <p>&copy; 2024 ANNalyzeStress. Designed with care by Ashraf.</p>
+    </footer>
+</body>
+</html>

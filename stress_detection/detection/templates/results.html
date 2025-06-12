@@ -1,0 +1,213 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Results - ANNalyzeStress</title>
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #1a1a2e; /* Deep dark background */
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+
+        header {
+            background: linear-gradient(90deg, #0f0c29, #302b63, #24243e);
+            padding: 20px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+        }
+
+        header h1 {
+            font-size: 36px;
+            font-weight: bold;
+            background: linear-gradient(90deg, #6a11cb, #2575fc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .container {
+            text-align: center;
+            padding: 50px;
+            margin: 100px auto;
+            width: 80%;
+            max-width: 900px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+            animation: fadeIn 2s ease-in-out;
+        }
+
+        .stress-level {
+            font-size: 3em;
+            font-weight: bold;
+            color: white; /* Default color for text */
+            padding: 30px;
+            border-radius: 20px;
+            margin: 20px 0;
+            transition: transform 0.5s ease-in-out;
+            animation: pulse 1.5s infinite;
+        }
+
+        .stress-level.low {
+            background-color: #48C78E; /* Green for low stress */
+        }
+
+        .stress-level.detected {
+            background-color: #ff6363; /* Red for high stress */
+        }
+
+        .message {
+            font-size: 1.2em;
+            color: #d1d1d1;
+            margin-top: 20px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 15px 30px;
+            margin: 20px 0;
+            background: linear-gradient(135deg, #6a11cb, #2575fc);
+            color: white;
+            border: none;
+            border-radius: 30px;
+            font-weight: bold;
+            font-size: 1.2em;
+            transition: transform 0.3s ease;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .parameters-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .parameter-card {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+            width: 250px;
+            text-align: left;
+        }
+
+        .parameter-card h3 {
+            font-size: 1.5em;
+            color: #48C78E;
+            margin-bottom: 10px;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        li {
+            text-align: left;
+            margin: 5px 0;
+            color: #d1d1d1;
+            font-size: 1.1em;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+
+        @keyframes fadeIn {
+            0% { opacity: 0; transform: scale(0.9); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Section -->
+    <header>
+        <h1>ANNalyzeStress</h1>
+    </header>
+
+    <!-- Results Section -->
+    <div class="container">
+        <h2>Your Stress Level</h2>
+
+        <!-- Stress Level Visualization (In Box) -->
+        <div class="stress-level {% if stress_level == 'Detected' %}detected{% elif stress_level == 'Not Detected' %}low{% endif %}">
+            {{ stress_level }}
+        </div>
+
+        <div class="message">
+            {% if stress_level == "Detected" %}
+                <p>Your stress level is high. Consider relaxing and consulting a professional if necessary.</p>
+                <a href="{% url 'overcome_stress' %}" class="btn">How to Overcome Stress</a>
+            {% else %}
+                <p>Your stress level is low. Keep up the healthy habits!</p>
+                <a href="{% url 'maintain_low_stress' %}" class="btn">How to Maintain Low Stress</a>
+            {% endif %}
+        </div>
+
+        {% if parameters %}
+            <h2>Your Latest Parameters</h2>
+            <div class="parameters-container">
+                <div class="parameter-card">
+                    <h3>Snoring Rate</h3>
+                    <p>{{ parameters.snoring_rate }}</p>
+                </div>
+                <div class="parameter-card">
+                    <h3>Respiratory Rate</h3>
+                    <p>{{ parameters.respiratory_rate }}</p>
+                </div>
+                <div class="parameter-card">
+                    <h3>Body Temperature</h3>
+                    <p>{{ parameters.body_temperature }}</p>
+                </div>
+                <div class="parameter-card">
+                    <h3>Limb Movement</h3>
+                    <p>{{ parameters.limb_movement }}</p>
+                </div>
+                <div class="parameter-card">
+                    <h3>Blood Oxygen</h3>
+                    <p>{{ parameters.blood_oxygen }}</p>
+                </div>
+                <div class="parameter-card">
+                    <h3>Eye Movement</h3>
+                    <p>{{ parameters.eye_movement }}</p>
+                </div>
+                <div class="parameter-card">
+                    <h3>Sleep Hours</h3>
+                    <p>{{ parameters.sleep_hours }}</p>
+                </div>
+                <div class="parameter-card">
+                    <h3>Heart Rate</h3>
+                    <p>{{ parameters.heart_rate }}</p>
+                </div>
+            </div>
+        {% endif %}
+
+        <!-- Back to Home Button -->
+        {% if user.is_authenticated %}
+            <a href="{% url 'welcome' %}" class="btn">Back to Home</a>
+        {% else %}
+            <a href="{% url 'index' %}" class="btn">Back to Home</a>
+        {% endif %}
+    </div>
+</body>
+</html>

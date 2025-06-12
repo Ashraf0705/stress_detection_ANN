@@ -1,0 +1,133 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maintain Low Stress - ANNalyzeStress</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #1a1a2e; /* Deep dark background */
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+
+        header {
+            background: linear-gradient(90deg, #0f0c29, #302b63, #24243e);
+            padding: 20px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        header h1 {
+            font-size: 36px;
+            font-weight: bold;
+            background: linear-gradient(90deg, #6a11cb, #2575fc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .container {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+            width: 600px;
+            animation: fadeIn 2s ease-in-out;
+            margin: 100px auto;
+        }
+
+        h1 {
+            font-size: 2.2em;
+            color: #6a11cb;
+            margin-bottom: 10px;
+        }
+
+        .message {
+            font-size: 1.2em;
+            color: #d1d1d1;
+            margin: 20px 0;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 15px 30px;
+            margin: 20px 0;
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            color: white;
+            border: none;
+            border-radius: 30px;
+            font-weight: bold;
+            font-size: 1.1em;
+            transition: transform 0.3s ease;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 10px 0;
+        }
+
+        li {
+            text-align: left;
+            margin: 5px 0;
+            font-size: 1.1em;
+            color: #d1d1d1;
+        }
+
+        @keyframes fadeIn {
+            0% { opacity: 0; transform: scale(0.9); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Section -->
+    <header>
+        <h1>ANNalyzeStress</h1>
+    </header>
+
+    <!-- Maintain Low Stress Section -->
+    <div class="container">
+        <h1>Keep Up the Great Work, {{ user.username }}!</h1>
+        <p class="message">Your stress level is low, which means you're doing great at managing your well-being!</p>
+        <p class="message">To maintain this healthy state, here are some tips:</p>
+        
+        <h2>Tips to Maintain Low Stress</h2>
+        <ul>
+            <li><strong>Keep a Balanced Diet:</strong> Eat nutritious foods that support your mental and physical health.</li>
+            <li><strong>Stay Active:</strong> Regular exercise, like walking or yoga, helps in maintaining your low stress levels.</li>
+            <li><strong>Practice Mindfulness:</strong> Take time to meditate and engage in breathing exercises.</li>
+            <li><strong>Stay Connected:</strong> Socialize and build strong connections with your friends and family.</li>
+            <li><strong>Get Enough Sleep:</strong> Ensure 7-9 hours of quality sleep each night to keep your mind and body refreshed.</li>
+        </ul>
+
+        <h2>External Resources</h2>
+        <p class="message">You can explore these resources to keep your mental health in check:</p>
+        <ul>
+            <li><a href="https://www.headspace.com/" target="_blank" class="btn">Headspace - Meditation & Mindfulness</a></li>
+            <li><a href="https://www.calm.com/" target="_blank" class="btn">Calm - Relaxation & Sleep</a></li>
+            <li><a href="https://www.psychologytoday.com/us" target="_blank" class="btn">Psychology Today - Therapy and Counseling</a></li>
+        </ul>
+
+        <a href="{% url 'welcome' %}" class="btn">Back to Dashboard</a>
+    </div>
+</body>
+</html>
