@@ -7,13 +7,34 @@ from .models import StressParameters
 import numpy as np
 import joblib
 from tensorflow.keras.models import load_model
+from django.conf import settings
+import os
 
-# Load the trained model and scaler
-MODEL_PATH = 'detection/ml/models/stress_model.h5'
-SCALER_PATH = 'detection/ml/models/scaler.pkl'
+# ==============================================================================
+#  PERFORMANCE OPTIMIZATION FOR DEPLOYMENT
+# ==============================================================================
+# We load the model and scaler only ONCE when the app starts, not on every request.
+# This prevents memory errors and timeouts on services like Render.
 
-model = load_model(MODEL_PATH)
-scaler = joblib.load(SCALER_PATH)
+# Use settings.BASE_DIR to build an absolute path to the model files.
+# This is more reliable than relative paths.
+MODEL_PATH = os.path.join(settings.BASE_DIR, 'detection', 'ml', 'models', 'stress_model.h5')
+SCALER_PATH = os.path.join(settings.BASE_DIR, 'detection', 'ml', 'models', 'scaler.pkl')
+
+# Wrap the loading in a try...except block to handle potential errors gracefully.
+try:
+    stress_model = load_model(MODEL_PATH)
+    scaler = joblib.load(SCALER_PATH)
+    print("✅ ML models loaded successfully on startup.") # This will appear in your Render logs
+except Exception as e:
+    # If models fail to load, the app can still run, but predictions will fail.
+    print(f"❌ ERROR: Failed to load ML models on startup. Error: {e}")
+    stress_model = None
+    scaler = None
+
+# ==============================================================================
+#  YOUR VIEWS START HERE
+# ==============================================================================
 
 def index(request):
     """Home page view"""
@@ -67,6 +88,11 @@ def welcome(request):
 @login_required
 def parameter_entry(request):
     """View to enter stress parameters; requires login"""
+    # Check if models were loaded correctly at startup
+    if not stress_model or not scaler:
+        messages.error(request, 'The prediction service is currently unavailable. Please try again later.')
+        return render(request, 'parameter_entry.html')
+
     if request.method == 'POST':
         # Retrieve form data
         snoring_rate = request.POST.get('snoring_rate')
@@ -76,7 +102,7 @@ def parameter_entry(request):
         blood_oxygen = request.POST.get('blood_oxygen')
         eye_movement = request.POST.get('eye_movement')
         sleep_hours = request.POST.get('sleep_hours')
-        heart_rate = request.POST.get('heart_rate')
+        heart_rate = request.POST.gset('heart_rate')
 
         # Save the data to the database
         stress_params = StressParameters(
@@ -104,13 +130,13 @@ def parameter_entry(request):
             stress_params.heart_rate
         ]
         
-        # Normalize and predict stress level using the trained model
+        # Use the globally pre-loaded model and scaler
         input_data = np.array(input_data).reshape(1, -1)
         scaled_data = scaler.transform(input_data)
-        prediction = model.predict(scaled_data)
+        prediction = stress_model.predict(scaled_data)
 
         # Interpret the result
-        if prediction[0][0] > 0.5:  # Assuming sigmoid activation in the output layer
+        if prediction[0][0] > 0.5:  # Assuming sigmoid activation
             stress_level = "Detected"
         else:
             stress_level = "Not Detected"
@@ -120,23 +146,21 @@ def parameter_entry(request):
         stress_params.save()
 
         # Redirect to results page with stress level as a part of the URL
-        return redirect('results', stress_level=stress_level)  # Pass the stress_level as an argument
+        return redirect('results', stress_level=stress_level)
 
     return render(request, 'parameter_entry.html')
 
 @login_required
 def results(request, stress_level):
     """Results page view"""
-    # Get the most recent entry for the logged-in user
     latest_parameters = StressParameters.objects.filter(user=request.user).last()
 
-    # If no parameters are found, display a message
     if not latest_parameters:
         messages.error(request, 'No parameters found for your account.')
-        return redirect('parameter_entry')  # Redirect back to parameter entry page if no data
+        return redirect('parameter_entry')
 
     return render(request, 'results.html', {
-        'stress_level': stress_level,  # Use the stress level passed from the URL
+        'stress_level': stress_level,
         'parameters': latest_parameters
     })
 
@@ -150,13 +174,12 @@ def maintain_low_stress(request):
             'user': request.user,
         })
     else:
-        return redirect('overcome_stress')  # If the stress level is detected, redirect to overcome_stress
+        return redirect('overcome_stress')
 
 @login_required
 def overcome_stress(request):
     """Page to overcome stress"""
     latest_parameters = StressParameters.objects.filter(user=request.user).last()
-
     return render(request, 'overcome_stress.html', {
         'user': request.user,
     })
@@ -164,7 +187,7 @@ def overcome_stress(request):
 def logout_view(request):
     """Logout view"""
     logout(request)
-    return redirect('index')  # Redirect to the homepage after logout
+    return redirect('index')
 
 def about(request):
     """About page view"""
