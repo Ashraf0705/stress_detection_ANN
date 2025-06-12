@@ -102,7 +102,7 @@ def parameter_entry(request):
         blood_oxygen = request.POST.get('blood_oxygen')
         eye_movement = request.POST.get('eye_movement')
         sleep_hours = request.POST.get('sleep_hours')
-        heart_rate = request.POST.gset('heart_rate')
+        heart_rate = request.POST.get('heart_rate')
 
         # Save the data to the database
         stress_params = StressParameters(
