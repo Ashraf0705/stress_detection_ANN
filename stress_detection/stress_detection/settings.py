@@ -26,6 +26,14 @@ if RENDER_EXTERNAL_HOSTNAME:
     ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
 
 
+if 'DATABASE_URL' in os.environ:
+    DATABASES = {
+        'default': dj_database_url.config(
+            conn_max_age=600,
+            ssl_require=True
+        )
+    }
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -77,26 +85,6 @@ WSGI_APPLICATION = 'stress_detection.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-if 'DATABASE_URL' in os.environ:
-    # We are on Render, use the Render database
-    DATABASES = {
-        'default': dj_database_url.config(
-            conn_max_age=600,
-            ssl_require=True
-        )
-    }
-else:
-    # We are on a local machine, use the local MySQL database
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.mysql',
-            'NAME': config('DB_NAME'),
-            'USER': config('DB_USER'),
-            'PASSWORD': config('DB_PASSWORD'),
-            'HOST': config('DB_HOST', default='127.0.0.1'),
-            'PORT': config('DB_PORT', default='3306'),
-        }
-    }
 
 
 # Password validation
@@ -131,15 +119,17 @@ USE_TZ = True
 
 
 # Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/5.0/howto/static-files/
-
 STATIC_URL = 'static/'
-
 STATIC_ROOT = BASE_DIR / 'staticfiles'
-# Add this line for WhiteNoise storage
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# settings.py (at the very bottom)
+
+try:
+    from .local_settings import *
+except ImportError:
+    pass
