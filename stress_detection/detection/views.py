@@ -6,7 +6,7 @@ from django.contrib.auth.decorators import login_required
 from .models import StressParameters
 import numpy as np
 import joblib
-from tensorflow.keras.models import load_model
+from keras.models import load_model
 from django.conf import settings
 import os
 
